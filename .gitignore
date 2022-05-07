@@ -114,4 +114,4 @@ dmypy.json
 .pyre/
 
 # Ignore my puzzle inputs
-*_actual.txt
+puzzle_input.txt
