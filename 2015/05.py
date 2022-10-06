@@ -1,69 +1,137 @@
 # Day 5: Doesn't He Have Intern-Elves For This?
 
-puzzle = None
-
 class NiceString:
+    
+    def __init__(self, value :str):
+        self.value = value.rstrip()
 
-    def __init__(self, word :str):
-        self.word = word
+    def has_three_vowels(self) -> bool:
+        """
+        Contains at least 3 vowels
+        """
+        vowels = { "a": 0, "e": 0, "i": 0, "o": 0, "u": 0 }
+
+        for letter in list(self.value):
+            try:
+                vowels[letter] += 1
+            except Exception as e:
+                # not a vowel
+                pass
+
+        return ( sum(vowels.values()) >= 3 )
+
+    def has_letter_twice_in_a_row(self) -> bool:
+        """
+        Contains at least one letter that appears twice in a row,
+        """
+
+        for index in range(0, len(self.value)):
+            try:
+                current_letter = self.value[index]
+                next_letter = self.value[index + 1]
+
+                if current_letter == next_letter:
+                    return True
+
+            except Exception as e:
+                pass
         
-    def isNice(self) -> bool:
-        # print(nicestring.vowel_check)
-        # print(nicestring.repeating_letters_check)
-        # print(nicestring.sequential_letter_check)
+        return False
 
-        check1 = self.check_vowels()
-        check2 = self.check_repeating_letters()
-        check3 = self.check_sequential_letters()
+    def has_bad_pairs(self) -> bool:
+        bad_pairs = [ "ab", "cd", "pq", "xy"]
 
-        return (check1 and check2 and check3)
+        for pair in bad_pairs:
+            if pair in self.value:
+                return True
 
-    def check_vowels(self) -> bool:
-        vowels = ["a","e","i","o","u"]
+        return False
 
-        vowel_count = 0
-        for letter in list(self.word):
+    def is_nice(self) -> bool:
+        """
+        Logic for solution to part one of puzzle
+        """
+        return (
+            self.has_letter_twice_in_a_row()
+            and self.has_three_vowels()
+            and not(self.has_bad_pairs())
+        )
+
+    def has_duplicate_pair(self) -> bool:
+        """
+        It contains a pair of any two letters that appears at least twice in the string without overlapping
+        """
+        pairs = {}
+
+        for index in range(0, len(self.value)):
+            key = self.value[index:index+2]
             
-            if letter in vowels:
-                vowel_count += 1
+            if key in pairs.keys():
+                pairs[key] += 1
+            else:
 
-        return (vowel_count >= 3)
+                if len(key) == 2:
+                    pairs[key] = 0
 
-    def check_repeating_letters(self) -> bool:
-        result = 0
+        # print(pairs)
+        return ( sum(pairs.values()) >= 1 )
 
-        for letter_index in range(0, len(self.word) - 1):
-            letter = word[letter_index]
-            next_letter = word[letter_index + 1]
+    def has_one_letter_gap(self) -> bool:
+        """
+        It contains at least one letter which repeats with exactly one letter between them
+        """
+        pairs = {}
 
-            if next_letter == letter:
-                result += 1
+        for index in range(0, len(self.value)):
+            key = self.value[index:index+3]
 
-        return result >= 1
+            if len(key) != 3:
+                continue
 
-    def check_sequential_letters(self) -> bool:
-        result = 0
+            if key in pairs.keys():
+                pairs[key] += 1
+            else:
+                pairs[key] = 0
 
-        for combo in ["ab", "cd", "pq", "xy"]:
-            if combo in self.word:
-                result += 1
+        # print(pairs)
 
-        return not(result > 0)
+        mirror_count = 0
 
-with open("puzzle_input.txt") as file:
-    puzzle = file.readlines()
+        for pair in pairs.keys():
+            if str(pair).endswith(str(pair)[0]):
+                mirror_count += 1
 
-# Solution to Part One of puzzle
-nice_count = 0
-for word in puzzle:
+        return (mirror_count >= 1)
 
-    nicestring = NiceString(word.strip())
+    def is_nice2(self) -> bool:
+        return (
+            self.has_one_letter_gap()
+            and self.has_duplicate_pair()
+        ) == True
 
-    if nicestring.isNice():
-        nice_count += 1
+if __name__=="__main__":
 
-print(nice_count)
+    # Read puzzle input
+    words = []
+    with open("puzzle_input.txt") as f:
+        words = f.readlines()
+    
+    # answer for puzzle
+    part_one = 0
+    part_two = 0
 
-# Solution to Part Two of puzzle
+    for word in words:
+        a = NiceString(word)
+        is_nice = a.is_nice()
+        is_nice2 = a.is_nice2()
 
-# not done yet
+        if is_nice:
+            part_one += 1
+
+        if is_nice2:
+            part_two += 1
+        
+        # print(a.value, " ", is_nice2)
+
+    print("part_one", part_one)
+    print("part_two", part_two)
