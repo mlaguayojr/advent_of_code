@@ -14,4 +14,4 @@ Each year offers 25 days of challenges, each day containing two parts (second pa
 | 2018 | 0 |   |
 | 2017 | 0 |   |
 | 2016 | 0 |   |
-| 2015 | 11 | Day 5: part 2 not finished<br>Day 6: needs troubleshooting |
+| 2015 | 13 | Day 5: part 2 not finished<br> |

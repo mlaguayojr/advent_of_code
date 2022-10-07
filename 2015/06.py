@@ -34,18 +34,19 @@ class Grid:
 
             for col in rows:
                 if col == 0:
-                    line += ""
+                    line += "-"
                 else:
-                    line += "."
+                    line += "*"
             
             line += "\n"
         
         return line
 
     def set_light(self, row :int, column :int, value :int):
-        # print("before: ", get_light(row, column))
+        """
+        Change the state of light
+        """
         self.grid[row][column] = value
-        # print("after: ", get_light(row, column))
 
     def get_light(self, row :int, column :int) -> int:
         return self.grid[row][column]
@@ -54,7 +55,6 @@ class Grid:
         points = list()
 
         current_point = Point(start_point.row, start_point.column)
-        # print(current_point, "->", end_point)
 
         while(current_point != end_point):
             points.append(Point(current_point.row, current_point.column))
@@ -62,11 +62,19 @@ class Grid:
             if current_point.column != end_point.column:
                 current_point.column += 1
             else:
-                current_point.column = 0
+                current_point.column = start_point.column
                 current_point.row += 1
 
         points.append(Point(end_point.row, end_point.column))
         return points
+
+    def get_values(self) -> int:
+        lights_lit = 0
+        for i in self.grid:
+            lights_lit += sum(i)
+
+        return lights_lit
+
 
 class Instruction:
 
@@ -90,6 +98,7 @@ class Instruction:
         [row, column] = [ int(x) for x in part_two.split(',') ]
         self.end_point = Point(row, column)
 
+
 if __name__=="__main__":
 
     # Get data
@@ -97,35 +106,73 @@ if __name__=="__main__":
     with open("puzzle_input.txt") as f:
         data = f.readlines()
 
-    # Create grid
-    grid = Grid(1000, 1000)
 
-    # Follow instructions
-    for line in data:
-        ins = Instruction(line.rstrip())
+    def part_one_solution():
+        # Create grid
+        grid = Grid(1000, 1000)
 
-        points = grid.get_points(ins.start_point, ins.end_point)
+        # Follow instructions
+        for line in data:
+            ins = Instruction(line.rstrip())
 
-        for point in points:
-            if ins.command == "turn on":
-                grid.set_light(point.row, point.column, 1)
-            elif ins.command == "turn off":
-                grid.set_light(point.row, point.column, 0)
-            elif ins.command == "toggle":
-                current_value = grid.get_light(point.row, point.column)
+            points = grid.get_points(ins.start_point, ins.end_point)
 
-                if current_value == 0:
-                    current_value = 1
+            for point in points:
+                if ins.command == "turn on":
+                    grid.set_light(point.row, point.column, 1)
+
+                elif ins.command == "turn off":
+                    grid.set_light(point.row, point.column, 0)
+
+                elif ins.command == "toggle":
+                    current_value = grid.get_light(point.row, point.column)
+
+                    if current_value == 0:
+                        current_value = 1
+                    else:
+                        current_value = 0
+
+                    grid.set_light(point.row, point.column, current_value)
+
                 else:
-                    current_value = 0
+                    continue
 
-                grid.set_light(point.row, point.column, current_value)
-            else:
-                continue
+        print("Part One answer:", grid.get_values())
 
-    lights_lit = 0
-    for i in grid.grid:
-        lights_lit += sum(i)
-    
-    print(grid)
-    print(lights_lit)
+    def part_two_solution():
+        # Create grid
+        grid = Grid(1000, 1000)
+
+        # Follow instructions
+        for line in data:
+            ins = Instruction(line.rstrip())
+
+            points = grid.get_points(ins.start_point, ins.end_point)
+
+            for point in points:
+
+                p = grid.get_light(point.row, point.column)
+
+                if ins.command == "turn on":
+
+                    if(p >= 0):
+                        grid.set_light(point.row, point.column, p + 1)
+
+                elif ins.command == "turn off":
+
+                    if(p > 0):
+                        grid.set_light(point.row, point.column, p - 1)
+
+                elif ins.command == "toggle":
+
+                    if(p >= 0):
+                        grid.set_light(point.row, point.column, p + 2)
+
+                else:
+                    continue
+
+        print("Part Two answer:", grid.get_values())
+
+
+    part_one_solution()
+    part_two_solution()
