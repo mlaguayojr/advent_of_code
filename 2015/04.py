@@ -1,4 +1,4 @@
-# Day 4: The Ideal Stocking Stuffer
+# --- Day 4: The Ideal Stocking Stuffer ---
 
 from hashlib import md5
 

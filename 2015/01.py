@@ -1,4 +1,4 @@
-# Day 1: Not Quite Lisp
+# --- Day 1: Not Quite Lisp ---
 
 puzzle = "" #define puzzle here
 

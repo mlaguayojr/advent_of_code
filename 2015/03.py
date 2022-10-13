@@ -1,4 +1,5 @@
-# Day 3: Perfectly Spherical Houses in a Vacuum
+# --- Day 3: Perfectly Spherical Houses in a Vacuum ---
+
 puzzle = None
 
 with open("puzzle_input.txt") as file:

@@ -1,3 +1,4 @@
+# --- Day 9: All in a Single Night ---
 import itertools
 
 class City:
