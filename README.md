@@ -16,7 +16,7 @@ I will not be uploading my solutions for 2022 while the event is live (they will
 | 2022 | 0 | Not Yet Available |
 | 2021 | 11 | Looks like I'm missing code - going to redo.  |
 | 2020 | 10 | No idea where I put my code - going to redo. |
-| 2019 | 0 | Not started  |
+| 2019 | 2 | Not started  |
 | 2018 | 0 | Not started  |
 | 2017 | 0 | Not started  |
 | 2016 | 0 | Not started  |
