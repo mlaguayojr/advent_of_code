@@ -9,11 +9,11 @@ Each year offers 25 days of challenges, each day containing two parts (second pa
 Currently, I am reviewing/redoing my past solutions and uploading them here. I've either swapped laptops, or wiped my computer and therefore need to redo the code for past years....yay.
 
 ### Disclaimer about 2022 Solutions
-I will not be uploading my solutions for 2022 while the event is live (they will most likely be up by end of January).
+Solutions will be uploaded a few days after their initial release (e.g., solution for day 1 will be released a day or two later, but not same day).
 
 | Year | Star count | Remarks |
 |:--:|-----------:|---------|
-| 2022 | 0 | Not Yet Available |
+| 2022 | 4 | WIP |
 | 2021 | 11 | Looks like I'm missing code - going to redo.  |
 | 2020 | 10 | No idea where I put my code - going to redo. |
 | 2019 | 2 | Not started  |
