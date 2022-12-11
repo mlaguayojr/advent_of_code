@@ -13,7 +13,7 @@ Solutions will be uploaded a few days after their initial release (e.g., solutio
 
 | Year | Star count | Remarks |
 |:--:|-----------:|---------|
-| 2022 | 4 | WIP |
+| 2022 | 8 | WIP |
 | 2021 | 11 | Looks like I'm missing code - going to redo.  |
 | 2020 | 10 | No idea where I put my code - going to redo. |
 | 2019 | 2 | Not started  |
