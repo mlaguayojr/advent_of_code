@@ -1,35 +1,56 @@
 # --- Day 1: Not Quite Lisp ---
+def load_puzzle() -> list:
+    data = list()
+    with open("puzzle_input.txt") as f:
+        data = [x for x in f.read()]
+    return data
 
-puzzle = "" #define puzzle here
+class Building:
 
-# Solution for Part One of puzzle
-def count_floor(floor_letter: str) -> int:
-    if floor_letter == "(":
-        return 1
-    elif floor_letter == ")":
-        return -1
+    def __init__(self) -> None:
+        self.floor_number :int = 0
 
-floor_number = 0
-for index in range(0, len(puzzle), 1):
-    letter = puzzle[index]
-    # print( index + 1, letter)
+    def up_floor(self):
+        self.floor_number += 1
+    
+    def down_floor(self):
+        self.floor_number -= 1
 
-    floor_number += count_floor(letter)
+    def in_basement(self) -> bool:
+        return self.floor_number < 0
 
-print("puzzle one answer: %s" % (floor_number))
+    def __str__(self) -> str:
+        return "Current floor: %i" % (self.floor_number)
 
-floor_number = 0 # reset
+def part_one_solution():
+    data = load_puzzle()
 
-# Solution for Part Two of puzzle
-for index in range(0, len(puzzle), 1):
-    letter = puzzle[index]
-    # print( index + 1, letter)
+    building = Building()
+    for i in data:
+        if i == "(":
+            building.up_floor()
+        elif i == ")":
+            building.down_floor()
+    
+    print("Part one solution:", building.floor_number)
 
-    floor_number += count_floor(letter)
+def part_two_solution():
+    data = load_puzzle()
 
-    if floor_number == -1:
-        # print("entered the basement")
-        floor_number = index + 1
-        break
+    building = Building()
+    for index in range(0, len(data)):
+        instruction = data[index]
 
-print("puzzle two answer: %s" % (floor_number))
+        if instruction == "(":
+            building.up_floor()
+        elif instruction == ")":
+            building.down_floor()
+
+        if building.in_basement():
+            break
+
+    print("Part two solution:", index+1)
+
+
+part_one_solution()
+part_two_solution()

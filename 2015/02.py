@@ -1,37 +1,64 @@
 # --- Day 2: I Was Told There Would Be No Math ---
+def load_puzzle() -> list:
+    data = list()
+    with open("puzzle_input.txt") as f:
+        data = [ [int(y) for y in x.split("x") ] for x in f.readlines()]
+    return data
 
-puzzle = None
+class RightRectangularPrism:
+    
+    def __init__(self, dimensions :list) -> None:
+        self.length :int = dimensions[0]
+        self.width :int = dimensions[1]
+        self.height :int = dimensions[2]
+        self.dimensions :list(int) = dimensions
 
-with open("puzzle_input.txt") as file:
-    puzzle = file.readlines()
+    def get_surface_area(self) -> int:
+        return (
+            (2 * self.length * self.width)
+            + (2 * self.width * self.height)
+            + (2 * self.height * self.length)
+            + self.get_area_of_smallest_side()
+        )
 
-# Solution for Part One of puzzle
-def surface_area(length :int, width :int, height :int) -> int:
-    num1 = length * width
-    num2 = width * height
-    num3 = height * length
-    surface_area = (2 * num1) + (2 * num2) + (2 * num3)
-    return surface_area + min(num1, num2, num3)
+    def get_area_of_smallest_side(self) -> int:
+        smallest = sorted(self.dimensions, reverse=False)[:2]
+        return smallest[0] * smallest[1]
 
-total_surface_area = 0
+    def get_feet_of_ribbon(self) -> int:
+        smallest_perimeter = min([
+            (2 * self.height) + (2 * self.length), 
+            (2 * self.width) + (2 * self.length),
+            (2 * self.width) + (2 * self.height)
+        ])
+        
+        return (
+            smallest_perimeter
+            + (self.length * self.width * self.height)
+        )
 
-for measurement in puzzle:
-    [length, width, height] = [ int(i) for i in measurement.split("x") ]
-    total_surface_area += surface_area(length, width, height)
+    def __str__(self) -> str:
+        return "L: %i, W: %i, H: %i" % (self.length, self.width, self.height)
 
-print("puzzle one answer: %s" % (total_surface_area))
+def part_one_solution():
+    data = load_puzzle()
+    total_sum = 0
 
-total_surface_area = 0 # reset
+    for i in data:
+        shape = RightRectangularPrism(i)
+        total_sum += shape.get_surface_area()
+    
+    print("Part one solution:", total_sum)
 
-# Solution for Part Two of puzzle
-def smallest_perimeter(length :int, width :int, height :int) -> int:
-    face1 = (2 * height) + (2 * length)
-    face2 = (2 * width) + (2 * length)
-    face3 = (2 * width) + (2 * height)
-    return min(face1, face2, face3)
+def part_two_solution():
+    data = load_puzzle()
+    total_sum = 0
 
-for measurement in puzzle:
-    [length, width, height] = [ int(i) for i in measurement.split("x") ]
-    total_surface_area += ( smallest_perimeter(length, width, height) + (length *  width * height))
+    for i in data:
+        shape = RightRectangularPrism(i)
+        total_sum += shape.get_feet_of_ribbon()
+    
+    print("Part two solution:", total_sum)
 
-print("puzzle two answer: %s" % (total_surface_area))
+part_one_solution()
+part_two_solution()
